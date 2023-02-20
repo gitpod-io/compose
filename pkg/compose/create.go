@@ -1356,6 +1356,12 @@ func (s *composeService) resolveOrCreateNetwork(ctx context.Context, project *ty
 	if createOpts.Options == nil {
 		createOpts.Options = make(map[string]string)
 	}
+	// override MTU value and set custom MTU one.
+	// This is required for gitpod.io due to the veth change
+	// https://github.com/gitpod-io/gitpod/pull/8955
+	if createOpts.Options == nil {
+		createOpts.Options = make(map[string]string)
+	}
 
 	netIface, err := netlink.LinkByName("ceth0")
 	if err == nil {
