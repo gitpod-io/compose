@@ -48,6 +48,7 @@ import (
 	"github.com/docker/docker/errdefs"
 	"github.com/docker/go-connections/nat"
 	"github.com/sirupsen/logrus"
+	"github.com/vishvananda/netlink"
 	cdi "tags.cncf.io/container-device-interface/pkg/parser"
 )
 
@@ -1347,6 +1348,18 @@ func (s *composeService) resolveOrCreateNetwork(ctx context.Context, project *ty
 			AuxAddress: ipamConfig.AuxiliaryAddresses,
 		}
 		createOpts.IPAM.Config = append(createOpts.IPAM.Config, config)
+	}
+
+	// override MTU value and set custom MTU one.
+	// This is required for gitpod.io due to the veth change
+	// https://github.com/gitpod-io/gitpod/pull/8955
+	if createOpts.Options == nil {
+		createOpts.Options = make(map[string]string)
+	}
+
+	netIface, err := netlink.LinkByName("ceth0")
+	if err == nil {
+		createOpts.Options["com.docker.network.driver.mtu"] = fmt.Sprintf("%v", netIface.Attrs().MTU)
 	}
 
 	networkEventName := fmt.Sprintf("Network %s", n.Name)

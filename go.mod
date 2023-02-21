@@ -61,6 +61,8 @@ require (
 	tags.cncf.io/container-device-interface v1.0.0
 )
 
+require github.com/vishvananda/netlink v1.3.1-0.20240922070040-084abd93d350
+
 require (
 	dario.cat/mergo v1.0.1 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6 // indirect
@@ -168,6 +170,7 @@ require (
 	github.com/tonistiigi/go-csvvalue v0.0.0-20240710180619-ddb21b71c0b4 // indirect
 	github.com/tonistiigi/units v0.0.0-20180711220420-6950e57a87ea // indirect
 	github.com/tonistiigi/vt100 v0.0.0-20240514184818-90bafcd6abab // indirect
+	github.com/vishvananda/netns v0.0.5 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
@@ -204,4 +207,13 @@ require (
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
+)
+
+replace (
+	// Override for e2e tests
+	github.com/cucumber/godog => github.com/laurazard/godog v0.0.0-20220922095256-4c4b17abdae7
+
+	// v1.2.1-beta.2 is the latest version, override to use v1.1.0 to avoid beta
+	// https://github.com/vishvananda/netlink/compare/v1.1.0...v1.2.1-beta.2
+	github.com/vishvananda/netlink => github.com/vishvananda/netlink v1.1.1-0.20210330154013-f5de75959ad5
 )
