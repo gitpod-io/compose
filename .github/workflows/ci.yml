@@ -34,7 +34,7 @@ jobs:
         name: Create matrix
         id: platforms
         run: |
-          echo matrix=$(docker buildx bake binary-cross --print | jq -cr '.target."binary-cross".platforms') >> $GITHUB_OUTPUT
+          echo ::set-output name=matrix::'["linux/amd64"]'
       -
         name: Show matrix
         run: |
