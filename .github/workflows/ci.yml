@@ -16,7 +16,7 @@ on:
       debug_enabled:
         description: 'To run with tmate enter "debug_enabled"'
         required: false
-        default: "false"
+        default: ""
 
 permissions:
   contents: read # to fetch code (actions/checkout)
