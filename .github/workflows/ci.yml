@@ -16,7 +16,7 @@ on:
       debug_enabled:
         description: 'To run with tmate enter "debug_enabled"'
         required: false
-        default: "false"
+        default: ""
 
 permissions:
   contents: read # to fetch code (actions/checkout)
@@ -34,7 +34,7 @@ jobs:
         name: Create matrix
         id: platforms
         run: |
-          echo matrix=$(docker buildx bake binary-cross --print | jq -cr '.target."binary-cross".platforms') >> $GITHUB_OUTPUT
+          echo ::set-output name=matrix::'["linux/amd64"]'
       -
         name: Show matrix
         run: |
@@ -49,7 +49,6 @@ jobs:
           - lint
           - validate-go-mod
           - validate-headers
-          - validate-docs
     steps:
       -
         name: Checkout

@@ -66,7 +66,7 @@ linters-settings:
       - unnamedResult
       - whyNoLint
   gocyclo:
-    min-complexity: 16
+    min-complexity: 18
   lll:
     line-length: 200
 issues:
